@@ -146,8 +146,8 @@ globalkeys = gears.table.join(
     -- Bluetooth
     awful.key({ modkey }, "!", function() awful.spawn.with_shell("bluetoothctl power on && bluetoothctl connect 2C:27:9E:70:B5:6A") end,   {description = "activate bluetooth and connect to headphone", group = "custom"}),
     -- Screenshot
-    awful.key({ modkey,        }, ",", function() awful.spawn.with_shell("maim | xclip -sel clip -t image/png") end,   {description = "screenshot", group = "custom"}),
-    awful.key({ modkey, "Shift"}, ",", function() awful.spawn.with_shell("maim --select | xclip -sel clip -t image/png") end,   {description = "screenshot", group = "custom"}),
+    awful.key({ modkey,        }, ",", function() awful.spawn.with_shell("save_screenshot") end,   {description = "screenshot save", group = "custom"}),
+    awful.key({ modkey, "Shift"}, ",", function() awful.spawn.with_shell("maim --select | xclip -sel clip -t image/png") end,   {description = "screenshot to clipboard", group = "custom"}),
     awful.key({ modkey, "Shift"}, ";", function() awful.spawn.with_shell("maim --select | tesseract stdin stdout -l jpn+jpn_vert --psm 3 | sed 's/ //g' | xclip -sel clip") end,    {description = "tesseract (languages=jp)", custom = "custom"}),
     -- VPN
     awful.key({ modkey,        }, "v", function() functions.openvpn_tmux_session(9) end,    {description = "connect to proton VPN", custom = "custom"})
