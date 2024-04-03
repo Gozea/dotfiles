@@ -1,7 +1,7 @@
 [keyboard]
 bindings = [
-    { key = "N", mods = "Control", chars = "nvim . \n" },
+    { key = "N", mods = "Control", chars = "nvim $(find . | fzf) \n" },
     { key = "Z", mods = "Control", chars = "cd && cd $(find -type d  | fzf) \n" },
     { key = "E", mods = "Control", chars = "fze \n" },
-    { key = "X", mods = "Control", chars = "clear \n" },
+    { key = "K", mods = "Control", chars = "cd ~/.config/nvim && nvim $(find . | fzf) \n" },
 ]

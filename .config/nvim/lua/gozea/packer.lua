@@ -50,4 +50,6 @@ return require('packer').startup(function(use)
 	}
     use { "beauwilliams/focus.nvim", config = function() require("focus").setup() end }
     use({ 'toppair/peek.nvim', run = 'deno task --quiet build:fast' })
+    use({"kylechui/nvim-surround", tag = "*", config = function() require("nvim-surround").setup({}) end })
+    use({"folke/trouble.nvim"})
 end)

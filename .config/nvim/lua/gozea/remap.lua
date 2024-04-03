@@ -32,3 +32,4 @@ vim.keymap.set("n", "<leader>p", "\"+p")
 
 -- blackhole
 vim.keymap.set("n", "<leader>d", "\"_d")
+vim.keymap.set("n", "<leader>c", "\"_c")

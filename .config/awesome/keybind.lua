@@ -1,6 +1,7 @@
 local gears = require("gears")
 local awful = require("awful")
 local menubar = require("menubar")
+local functions = require("functions")
 
 local hotkeys_popup = require("awful.hotkeys_popup")
 --widgets
@@ -80,6 +81,8 @@ globalkeys = gears.table.join(
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
+    awful.key({ modkey,           }, "a", function () awful.spawn("firefox") end,
+              {description = "open firefox", group = "launcher"}),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
@@ -142,10 +145,12 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "l", function() awful.spawn.with_shell("systemctl suspend") end,   {description = "lock screen", group = "custom"}),
     -- Bluetooth
     awful.key({ modkey }, "!", function() awful.spawn.with_shell("bluetoothctl power on && bluetoothctl connect 2C:27:9E:70:B5:6A") end,   {description = "activate bluetooth and connect to headphone", group = "custom"}),
-    -- screenshot
+    -- Screenshot
     awful.key({ modkey,        }, ",", function() awful.spawn.with_shell("maim | xclip -sel clip -t image/png") end,   {description = "screenshot", group = "custom"}),
     awful.key({ modkey, "Shift"}, ",", function() awful.spawn.with_shell("maim --select | xclip -sel clip -t image/png") end,   {description = "screenshot", group = "custom"}),
-    awful.key({ modkey, "Shift"}, ";", function() awful.spawn.with_shell("maim --select | tesseract stdin stdout -l jpn+jpn_vert --psm 3 | sed 's/ //g' | xclip -sel clip") end,    {description = "tesseract (languages=jp)", custom = "custom"})
+    awful.key({ modkey, "Shift"}, ";", function() awful.spawn.with_shell("maim --select | tesseract stdin stdout -l jpn+jpn_vert --psm 3 | sed 's/ //g' | xclip -sel clip") end,    {description = "tesseract (languages=jp)", custom = "custom"}),
+    -- VPN
+    awful.key({ modkey,        }, "v", function() functions.openvpn_tmux_session(9) end,    {description = "connect to proton VPN", custom = "custom"})
 
 
 )
