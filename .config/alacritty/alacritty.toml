@@ -1,7 +1,9 @@
 [keyboard]
 bindings = [
-    { key = "N", mods = "Control", chars = "nvim $(find . | fzf) \n" },
-    { key = "Z", mods = "Control", chars = "cd && cd $(find -type d  | fzf) \n" },
+    { key = "N", mods = "Control", chars = "nvim $(fd | fzf)  \n" },
+    { key = "Z", mods = "Control", chars = "cd && cd $(fd -t d  | fzf) \n" },
     { key = "E", mods = "Control", chars = "fze \n" },
     { key = "K", mods = "Control", chars = "cd ~/.config/nvim && nvim $(find . | fzf) \n" },
+    { key = "$", mods = "Control", chars = "cd && cd $(find dotfiles/ -not -path '*.git*' -not -name README.md -not -path 'dotfiles/' -not -path 'dotfiles/.config' -maxdepth 2 | fzf) && nvim .\n" },
+    { key = "B", mods = "Control", chars = "cd .. \n" },
 ]

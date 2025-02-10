@@ -16,3 +16,4 @@ vim.opt.incsearch = true
 
 -- scrolloff
 vim.opt.scrolloff = 8
+

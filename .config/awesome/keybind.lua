@@ -142,13 +142,15 @@ globalkeys = gears.table.join(
     awful.key({ 	       }, "XF86AudioRaiseVolume", function() volume_widget:inc(5) end,     {description = "increase volume", group = "custom"}),
     awful.key({ 	       }, "XF86AudioLowerVolume", function() volume_widget:dec(5) end,     {description = "decrease volume", group = "custom"}),
     awful.key({  	       }, "XF86AudioMute", function() volume_widget:toggle() end,   {description = "mute/unmute", group = "custom"}),
-    awful.key({ modkey }, "l", function() awful.spawn.with_shell("systemctl suspend") end,   {description = "lock screen", group = "custom"}),
+    awful.key({ modkey }, "$", function() awful.spawn.with_shell("systemctl suspend") end,   {description = "lock screen", group = "custom"}),
     -- Bluetooth
-    awful.key({ modkey }, "!", function() awful.spawn.with_shell("bluetoothctl power on && bluetoothctl connect 2C:27:9E:70:B5:6A") end,   {description = "activate bluetooth and connect to headphone", group = "custom"}),
+    awful.key({ modkey }, "!", function() awful.spawn.with_shell("bluetoothctl power off && bluetoothctl power on && bluetoothctl connect 2C:27:9E:70:B5:6A") end,   {description = "activate bluetooth and connect to headphone", group = "custom"}),
     -- Screenshot
     awful.key({ modkey,        }, ",", function() awful.spawn.with_shell("save_screenshot") end,   {description = "screenshot save", group = "custom"}),
     awful.key({ modkey, "Shift"}, ",", function() awful.spawn.with_shell("maim --select | xclip -sel clip -t image/png") end,   {description = "screenshot to clipboard", group = "custom"}),
     awful.key({ modkey, "Shift"}, ";", function() awful.spawn.with_shell("maim --select | tesseract stdin stdout -l jpn+jpn_vert --psm 3 | sed 's/ //g' | xclip -sel clip") end,    {description = "tesseract (languages=jp)", custom = "custom"}),
+    -- Clipboard
+    awful.key({ modkey,        }, "c", function() awful.spawn.with_shell("autoclip") end,    {description = "tesseract (languages=jp)", custom = "custom"}),
     -- VPN
     awful.key({ modkey,        }, "v", function() functions.openvpn_tmux_session(9) end,    {description = "connect to proton VPN", custom = "custom"})
 

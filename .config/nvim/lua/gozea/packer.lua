@@ -51,5 +51,41 @@ return require('packer').startup(function(use)
     use { "beauwilliams/focus.nvim", config = function() require("focus").setup() end }
     use({ 'toppair/peek.nvim', run = 'deno task --quiet build:fast' })
     use({"kylechui/nvim-surround", tag = "*", config = function() require("nvim-surround").setup({}) end })
-    use({"folke/trouble.nvim"})
+    use({
+      "epwalsh/obsidian.nvim",
+      tag = "*",  -- recommended, use latest release instead of latest commit
+      requires = {
+        -- Required.
+        "nvim-lua/plenary.nvim",
+
+        -- see below for full list of optional dependencies 👇
+      },
+      config = function()
+        require("obsidian").setup({
+          workspaces = {
+            {
+              name = "personal",
+              path = "~/Reports/personal",
+            },
+          },
+
+          -- see below for full list of options 👇
+        })
+      end,
+    })
+    use({
+        'MeanderingProgrammer/render-markdown.nvim',
+        after = { 'nvim-treesitter' },
+        requires = { 'echasnovski/mini.nvim', opt = true }, -- if you use the mini.nvim suite
+        -- requires = { 'echasnovski/mini.icons', opt = true }, -- if you use standalone mini plugins
+        -- requires = { 'nvim-tree/nvim-web-devicons', opt = true }, -- if you prefer nvim-web-devicons
+        config = function()
+            require('render-markdown').setup({})
+        end,
+    })
+    use ({"ziontee113/color-picker.nvim",
+    config = function()
+        require("color-picker")
+    end,
+})
 end)

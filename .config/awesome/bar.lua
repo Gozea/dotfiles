@@ -7,8 +7,13 @@ local menubar = require("menubar")
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
 local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
-local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
-
+local calendar_widget = require("gozea-awesome-widgets.calendar.calendar")
+local net_speed_widget = require("awesome-wm-widgets.net-speed-widget.net-speed")
+local cmus_widget = require("awesome-wm-widgets.cmus-widget.cmus")
+local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
+local wifi_widget = require("gozea-awesome-widgets.wifi.wifi")
+local vpn_widget = require("gozea-awesome-widgets.vpn.vpn-check")
+local appointment_widget = require("gozea-awesome-widgets.appointments.appointments")
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -143,18 +148,28 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
+            cmus_widget{
+                timeout=1,
+            },
+            weather_widget({
+                api_key='3fab3f38b51c0eb499dfb05c34a021fd',
+                coordinates = {45.5017, -73.5673},
+            }),
+            appointment_widget({
+                foresee=31
+            }),
             wibox.widget.systray(),
             mytextclock,
-	    battery_widget(),
-	    brightness_widget{
-                type = 'arc',
-	    	program = 'brightnessctl',
-	    },
-	    volume_widget{
-		    widget_type = 'arc',
-		    mute_color = "#ff0000"
-	    },
+            battery_widget(),
+            vpn_widget(),
+            wifi_widget(),
+            brightness_widget{
+                program = 'brightnessctl',
+            },
+            volume_widget{
+                widget_type = 'arc',
+                mute_color = "#ff0000"
+            },
             s.mylayoutbox,
         },
     }
