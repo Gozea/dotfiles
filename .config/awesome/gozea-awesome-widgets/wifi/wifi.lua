@@ -29,11 +29,11 @@ local function worker(user_args)
     wifi_widget.widget:buttons(
         gears.table.join(
             awful.button({}, 1, function ()
-                spawn.easy_async_with_shell("iwctl station wlan0 show | grep connected", function (stdout, _, _, code)
+                spawn.easy_async_with_shell("iwctl station wlan0 show | grep disconnected", function (stdout, _, _, code)
                     if code == 0 then
-                        spawn.with_shell("wifidisconnect")  -- custom bash function
+                        spawn.with_shell("wificonnect")  -- custom bash function
                     else
-                        spawn.with_shell("wificonnect")     -- custom bash function
+                        spawn.with_shell("wifidisconnect")     -- custom bash function
                     end
                 end)
             end
@@ -43,7 +43,7 @@ local function worker(user_args)
 
     local status
     local function show_wifi_status()
-        spawn.easy_async_with_shell("nmcli dev wifi | awk '{ if(length($1)==1) { print $3, $6, $7, $8 \"%\" }}'| sed 's/ /\\n/'", function (stdout)
+        spawn.easy_async_with_shell("iwctl station wlan0 show | tail -n +5 | head -n 5", function (stdout)
             naughty.destroy(status)
             status = naughty.notify {
                 text = stdout,
@@ -61,16 +61,18 @@ local function worker(user_args)
     local function update_widget(widget, stdout, _, _, code)
         -- Currently connected to a Wifi
         if code == 0 then
-            spawn.easy_async_with_shell("nmcli dev wifi | awk '{ if (length($1)==1) {print $8} }'", function (out)
+            spawn.easy_async_with_shell("iwctl station wlan0 get-networks | awk '/>/{print $NF}' | grep -oP '^\\*+'| tr -d '\n' | wc -c", function (out)
                 local signal = tonumber(out)
-                if signal >= 85 then
+                if signal == 4 then
                     widget:update_icon("network-wireless-signal-excellent-symbolic.svg")
-                elseif signal >= 55 then
+                elseif signal == 3 then
                     widget:update_icon("network-wireless-signal-good-symbolic.svg")
-                elseif signal >= 35 then
+                elseif signal == 2 then
                     widget:update_icon("network-wireless-signal-ok-symbolic.svg")
-                else
+                elseif signal == 1 then
                     widget:update_icon("network-wireless-signal-weak-symbolic.svg")
+                else 
+                    widget:update_icon("network-wireless-offline-symbolic.svg")
                 end
             end)
         -- Not currently connected to a Wifi
@@ -82,7 +84,7 @@ local function worker(user_args)
     wifi_widget.widget:connect_signal("mouse::enter", function() show_wifi_status() end)
     wifi_widget.widget:connect_signal("mouse::leave", function() naughty.destroy(status) end)
 
-    watch('bash -c "nmcli | grep \'wlp3s0: connected\'"', timeout, update_widget, wifi_widget.widget)
+    watch('bash -c "iwctl station wlan0 show | grep connected"', timeout, update_widget, wifi_widget.widget)
 
     return wifi_widget.widget
 end
