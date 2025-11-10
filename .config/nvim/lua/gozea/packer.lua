@@ -6,16 +6,27 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
 	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
+    -- LSP manager
     use{'mason-org/mason-lspconfig.nvim',
         requires = {
             {'neovim/nvim-lspconfig'},
             {'mason-org/mason.nvim'}
         },
         config = function()
+            require('mason').setup()
             require('mason-lspconfig').setup()
         end,
     }
+    -- Autocomplete
+    use('hrsh7th/nvim-cmp')
+    use('hrsh7th/cmp-nvim-lsp')
+    use('hrsh7th/cmp-buffer')
+    use('hrsh7th/cmp-path')
+    use('hrsh7th/cmp-cmdline')
+    -- Snippets
+    use('L3MON4D3/LuaSnip')
 
+    --Telescope
 	use {
 		'nvim-telescope/telescope.nvim',
 		-- or                            , branch = '0.1.x',
@@ -60,28 +71,6 @@ return require('packer').startup(function(use)
     use { "beauwilliams/focus.nvim", config = function() require("focus").setup() end }
     use({ 'toppair/peek.nvim', run = 'deno task --quiet build:fast' })
     use({"kylechui/nvim-surround", tag = "*", config = function() require("nvim-surround").setup({}) end })
-    -- use({
-    --   "epwalsh/obsidian.nvim",
-    --   tag = "*",  -- recommended, use latest release instead of latest commit
-    --   requires = {
-    --     -- Required.
-    --     "nvim-lua/plenary.nvim",
-
-    --     -- see below for full list of optional dependencies 👇
-    --   },
-    --   config = function()
-    --     require("obsidian").setup({
-    --       workspaces = {
-    --         {
-    --           name = "personal",
-    --           path = "~/Reports/personal",
-    --         },
-    --       },
-
-    --       -- see below for full list of options 👇
-    --     })
-    --   end,
-    -- })
     use({
         'MeanderingProgrammer/render-markdown.nvim',
         after = { 'nvim-treesitter' },

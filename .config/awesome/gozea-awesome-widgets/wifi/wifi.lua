@@ -29,7 +29,7 @@ local function worker(user_args)
     wifi_widget.widget:buttons(
         gears.table.join(
             awful.button({}, 1, function ()
-                spawn.easy_async_with_shell("nmcli | grep 'wlp3s0: connected'", function (stdout, _, _, code)
+                spawn.easy_async_with_shell("iwctl station wlan0 show | grep connected", function (stdout, _, _, code)
                     if code == 0 then
                         spawn.with_shell("wifidisconnect")  -- custom bash function
                     else
