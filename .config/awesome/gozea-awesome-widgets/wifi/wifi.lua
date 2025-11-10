@@ -40,6 +40,7 @@ local function worker(user_args)
             )
         )
     )
+
     local status
     local function show_wifi_status()
         spawn.easy_async_with_shell("nmcli dev wifi | awk '{ if(length($1)==1) { print $3, $6, $7, $8 \"%\" }}'| sed 's/ /\\n/'", function (stdout)

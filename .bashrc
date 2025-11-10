@@ -17,7 +17,7 @@ alias vim='nvim'
 alias gitkey='pass show git/key | xclip -sel clip'
 alias shutnow='shutdown -h now'
 alias wgconnect='wg-quick up $(ls /etc/wireguard/ | cut -d'.' -f1 | dmenu)'
-alias wgdisconnect='wg-quick down $(wg | grep "interface" | cut -d" " -f2 | dmenu)'
+alias wgdisconnect='wg-quick down $(sudo wg | grep "interface" | cut -d" " -f2 | dmenu)'
 
 #PATH export
 PATH=~/.local/share/gem/ruby/3.0.0/bin:$PATH
@@ -46,3 +46,5 @@ export PATH=$PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools:$ANDROID_SD
 # label studio 
 export LABEL_STUDIO_DISABLE_SIGNUP_WITHOUT_LINK=true
 
+# custom scripts
+export PATH=$PATH:$HOME/.local/gozea-bin/

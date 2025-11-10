@@ -14,6 +14,7 @@ local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
 local wifi_widget = require("gozea-awesome-widgets.wifi.wifi")
 local vpn_widget = require("gozea-awesome-widgets.vpn.vpn-check")
 local appointment_widget = require("gozea-awesome-widgets.appointments.appointments")
+local newsboat_widget = require("gozea-awesome-widgets.newsboat.newsboat")
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -163,6 +164,7 @@ awful.screen.connect_for_each_screen(function(s)
             battery_widget(),
             vpn_widget(),
             wifi_widget(),
+            newsboat_widget(),
             brightness_widget{
                 program = 'brightnessctl',
             },

@@ -91,7 +91,6 @@ local function worker(user_args)
             appointment_fg = beautiful.fg,
             border = beautiful.border_normal
         }
-
     }
 
     local args = user_args or {}
@@ -148,14 +147,6 @@ local function worker(user_args)
         markup = function(t) return '<b>' .. t .. '</b>' end,
     }
 
-    styles.appointment = {
-        fg_color = calendar_themes[theme].focus_date_fg,
-        bg_color = calendar_themes[theme].focus_date_bg,
-        markup = function(t) return '<b>' .. t .. '</b>' end,
-        shape = rounded_shape(4)
-    }
-
-
     local function decorate_cell(widget, flag, date)
         local d = { year = date.year, month = (date.month or 1), day = (date.day or 1) }
 
@@ -183,11 +174,9 @@ local function worker(user_args)
         -- Change fg color for appointment days
         local default_fg = props.fg_color
         for i, v in pairs(appointments) do
-            local appointment_day = os.date('%m/%d/%y', os.time(d)) == v
-            if appointment_day == true then
+            if os.date('%m/%d/%y', os.time(d)) == v then
                 default_fg = calendar_themes[theme].appointment_fg
             end
-            appointment_day = false
         end
 
         local ret = wibox.widget {
@@ -203,7 +192,7 @@ local function worker(user_args)
             shape = props.shape,
             shape_border_color = props.border_color or '#000000',
             shape_border_width = props.border_width or 0,
-            fg = props.fg_color or default_fg,
+            fg = default_fg,
             bg = props.bg_color or default_bg,
             widget = wibox.container.background
         }
@@ -231,22 +220,22 @@ local function worker(user_args)
     }
 
     popup:buttons(
-            awful.util.table.join(
-                    awful.button({}, next_month_button, function()
-                        local a = cal:get_date()
-                        a.month = a.month + 1
-                        cal:set_date(nil)
-                        cal:set_date(a)
-                        popup:set_widget(cal)
-                    end),
-                    awful.button({}, previous_month_button, function()
-                        local a = cal:get_date()
-                        a.month = a.month - 1
-                        cal:set_date(nil)
-                        cal:set_date(a)
-                        popup:set_widget(cal)
-                    end)
-            )
+    awful.util.table.join(
+    awful.button({}, next_month_button, function()
+        local a = cal:get_date()
+        a.month = a.month + 1
+        cal:set_date(nil)
+        cal:set_date(a)
+        popup:set_widget(cal)
+    end),
+    awful.button({}, previous_month_button, function()
+        local a = cal:get_date()
+        a.month = a.month - 1
+        cal:set_date(nil)
+        cal:set_date(a)
+        popup:set_widget(cal)
+    end)
+    )
     )
 
     function calendar_widget.toggle()

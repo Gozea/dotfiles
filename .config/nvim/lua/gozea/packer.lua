@@ -6,6 +6,15 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
 	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
+    use{'mason-org/mason-lspconfig.nvim',
+        requires = {
+            {'neovim/nvim-lspconfig'},
+            {'mason-org/mason.nvim'}
+        },
+        config = function()
+            require('mason-lspconfig').setup()
+        end,
+    }
 
 	use {
 		'nvim-telescope/telescope.nvim',
@@ -26,53 +35,53 @@ return require('packer').startup(function(use)
 	use('theprimeagen/harpoon')
 	use('mbbill/undotree')
 	use('tpope/vim-fugitive')
-	use {
-		'VonHeikemen/lsp-zero.nvim',
-		branch = 'v1.x',
-		requires = {
-			-- LSP Support
-			{'neovim/nvim-lspconfig'},             -- Required
-			{'williamboman/mason.nvim'},           -- Optional
-			{'williamboman/mason-lspconfig.nvim'}, -- Optional
+	--use {
+	--	'VonHeikemen/lsp-zero.nvim',
+	--	branch = 'v1.x',
+	--	requires = {
+	--		-- LSP Support
+	--		{'neovim/nvim-lspconfig'},             -- Required
+	--		{'williamboman/mason.nvim'},           -- Optional
+	--		{'williamboman/mason-lspconfig.nvim'}, -- Optional
 
-			-- Autocompletion
-			{'hrsh7th/nvim-cmp'},         -- Required
-			{'hrsh7th/cmp-nvim-lsp'},     -- Required
-			{'hrsh7th/cmp-buffer'},       -- Optional
-			{'hrsh7th/cmp-path'},         -- Optional
-			{'saadparwaiz1/cmp_luasnip'}, -- Optional
-			{'hrsh7th/cmp-nvim-lua'},     -- Optional
+	--		-- Autocompletion
+	--		{'hrsh7th/nvim-cmp'},         -- Required
+	--		{'hrsh7th/cmp-nvim-lsp'},     -- Required
+	--		{'hrsh7th/cmp-buffer'},       -- Optional
+	--		{'hrsh7th/cmp-path'},         -- Optional
+	--		{'saadparwaiz1/cmp_luasnip'}, -- Optional
+	--		{'hrsh7th/cmp-nvim-lua'},     -- Optional
 
-			-- Snippets
-			{'L3MON4D3/LuaSnip'},             -- Required
-			{'rafamadriz/friendly-snippets'}, -- Optional
-		}
-	}
+	--		-- Snippets
+	--		{'L3MON4D3/LuaSnip'},             -- Required
+	--		{'rafamadriz/friendly-snippets'}, -- Optional
+	--	}
+	--}
     use { "beauwilliams/focus.nvim", config = function() require("focus").setup() end }
     use({ 'toppair/peek.nvim', run = 'deno task --quiet build:fast' })
     use({"kylechui/nvim-surround", tag = "*", config = function() require("nvim-surround").setup({}) end })
-    use({
-      "epwalsh/obsidian.nvim",
-      tag = "*",  -- recommended, use latest release instead of latest commit
-      requires = {
-        -- Required.
-        "nvim-lua/plenary.nvim",
+    -- use({
+    --   "epwalsh/obsidian.nvim",
+    --   tag = "*",  -- recommended, use latest release instead of latest commit
+    --   requires = {
+    --     -- Required.
+    --     "nvim-lua/plenary.nvim",
 
-        -- see below for full list of optional dependencies 👇
-      },
-      config = function()
-        require("obsidian").setup({
-          workspaces = {
-            {
-              name = "personal",
-              path = "~/Reports/personal",
-            },
-          },
+    --     -- see below for full list of optional dependencies 👇
+    --   },
+    --   config = function()
+    --     require("obsidian").setup({
+    --       workspaces = {
+    --         {
+    --           name = "personal",
+    --           path = "~/Reports/personal",
+    --         },
+    --       },
 
-          -- see below for full list of options 👇
-        })
-      end,
-    })
+    --       -- see below for full list of options 👇
+    --     })
+    --   end,
+    -- })
     use({
         'MeanderingProgrammer/render-markdown.nvim',
         after = { 'nvim-treesitter' },
@@ -87,5 +96,6 @@ return require('packer').startup(function(use)
     config = function()
         require("color-picker")
     end,
-})
+    })
+	use('hat0uma/csvview.nvim')
 end)
