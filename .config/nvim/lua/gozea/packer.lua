@@ -18,11 +18,11 @@ return require('packer').startup(function(use)
         end
     })
     -- Autocomplete
-    use('hrsh7th/nvim-cmp')
-    use('hrsh7th/cmp-nvim-lsp')
-    use('hrsh7th/cmp-buffer')
-    use('hrsh7th/cmp-path')
-    use('hrsh7th/cmp-cmdline')
+    -- use('hrsh7th/nvim-cmp')
+    -- use('hrsh7th/cmp-nvim-lsp')
+    -- use('hrsh7th/cmp-buffer')
+    -- use('hrsh7th/cmp-path')
+    -- use('hrsh7th/cmp-cmdline')
     use('dense-analysis/ale')
     -- Comments
     use {
@@ -58,13 +58,6 @@ return require('packer').startup(function(use)
 		end,
 	}
     use('theprimeagen/harpoon')
-	use({
-		"kylechui/nvim-surround",
-		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
-		config = function()
-			require("nvim-surround").setup({})
-		end
-	})
     use('mbbill/undotree')
     use { "beauwilliams/focus.nvim", config = function() require("focus").setup() end }
     use({ 'toppair/peek.nvim', run = 'deno task --quiet build:fast' })

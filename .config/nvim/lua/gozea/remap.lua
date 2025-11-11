@@ -3,7 +3,7 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 -- set current directory as head
-vim.keymap.set("n", "<C-t>", "<cmd>lcd %:p:h<CR>")
+vim.keymap.set("n", "<leader>t", "<cmd>lcd %:p:h<CR>")
 
 -- v-mode shifting
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
